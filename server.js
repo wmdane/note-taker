@@ -1,7 +1,7 @@
 var express = require("express");
-var db = require("./db/db.json");
 var fs = require("fs");
 var path = require("path");
+var db = require("./db/db.json");
 
 var app = express();
 var PORT = process.env.PORT || 8000;
@@ -38,17 +38,17 @@ app.post("/api/notes", function (req, res) {
   });
 });
 
-// app.get("/api/notes/:id", function (req, res) {
-//   var chosenNote = req.params.id;
-//   if (chosenNote) {
-//     console.log(chosenNote);
-//     for (var i = 0; i < db.length; i++) {
-//       if (chosenNote === db[i].title) {
-//         db.splice(i, 1);
-//       }
-//     }
-//   }
-// });
+app.get("/api/notes/:id", function (req, res) {
+  var chosenNote = req.params.id;
+  if (chosenNote) {
+    console.log(chosenNote);
+    for (var i = 0; i < db.length; i++) {
+      if (chosenNote === db[i].title) {
+        db.splice(i, 1);
+      }
+    }
+  }
+});
 
 app.listen(PORT, function () {
   console.log("App listening on PORT " + PORT);
