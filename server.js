@@ -36,6 +36,7 @@ app.post("/api/notes", function (req, res) {
       console.log("Success!");
     }
   });
+  res.json(db);
 });
 
 app.get("/api/notes/:id", function (req, res) {
