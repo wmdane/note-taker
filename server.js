@@ -15,7 +15,7 @@ app.get("/notes", function (req, res) {
 });
 
 app.get("/api/notes", function (req, res) {
-  return res.json(db);
+  res.json(db);
 });
 
 app.get("*", function (req, res) {
@@ -23,11 +23,12 @@ app.get("*", function (req, res) {
 });
 
 app.post("/api/notes", function (req, res) {
-  var newNote = req.body;
+  let notes = req.body;
 
-  // newNote.routName = newNote.title.replace(/\s+/g, "").toLowerCase();
+  notes.id = db.length + 1;
 
-  db.push(newNote);
+  db.push(notes);
+  console.log(db);
   fs.writeFile("./db/db.json", JSON.stringify(db), function (err) {
     if (err) {
       console.log("error");
@@ -37,16 +38,17 @@ app.post("/api/notes", function (req, res) {
   });
 });
 
-app.delete("/api/notes/:id", function (req, res) {
-  var chosenNote = req.params.id;
-
-  console.log(id);
-
-  for (var i = 0; i < db.length; i++) {
-    if (chosenNote === db[i].title) {
-    }
-  }
-});
+// app.get("/api/notes/:id", function (req, res) {
+//   var chosenNote = req.params.id;
+//   if (chosenNote) {
+//     console.log(chosenNote);
+//     for (var i = 0; i < db.length; i++) {
+//       if (chosenNote === db[i].title) {
+//         db.splice(i, 1);
+//       }
+//     }
+//   }
+// });
 
 app.listen(PORT, function () {
   console.log("App listening on PORT " + PORT);
