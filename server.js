@@ -25,7 +25,7 @@ app.get("*", function (req, res) {
 app.post("/api/notes", function (req, res) {
   let notes = req.body;
 
-  notes.id = db.length + 1;
+  notes.id = db.length;
 
   db.push(notes);
   console.log(db);
@@ -39,14 +39,12 @@ app.post("/api/notes", function (req, res) {
   res.json(db);
 });
 
-app.get("/api/notes/:id", function (req, res) {
+app.delete("/api/notes/:id", function (req, res) {
   var chosenNote = req.params.id;
-  if (chosenNote) {
-    console.log(chosenNote);
-    for (var i = 0; i < db.length; i++) {
-      if (chosenNote === db[i].title) {
-        db.splice(i, 1);
-      }
+
+  for (var i = 0; i < db.length; i++) {
+    if (chosenNote === db[i].title) {
+      db.splice(i, 1);
     }
   }
 });
