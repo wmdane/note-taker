@@ -24,11 +24,13 @@ app.get("*", function (req, res) {
 
 app.post("/api/notes", function (req, res) {
   let notes = req.body;
+  //tried to make this increment every time a note was pushed into the array but it didn't work
+  // var idStart = 0;
 
-  notes.id = db.length;
+  notes.id = notes.title; //idStart;
 
   db.push(notes);
-  console.log(db);
+
   fs.writeFile("./db/db.json", JSON.stringify(db), function (err) {
     if (err) {
       console.log("error");
@@ -43,8 +45,9 @@ app.delete("/api/notes/:id", function (req, res) {
   var chosenNote = req.params.id;
 
   for (var i = 0; i < db.length; i++) {
-    if (chosenNote === db[i].title) {
-      db.splice(i, 1);
+    if (chosenNote === db[i].id) {
+      db.splice([i], 1);
+      res.json(db);
     }
   }
 });
